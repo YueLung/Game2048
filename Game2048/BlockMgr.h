@@ -21,6 +21,7 @@ public:
 	void moveUp();
 	void moveDown();
 
+	bool isGameOver();
 	void update();
 
 	void draw(sf::RenderWindow& window);

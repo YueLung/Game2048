@@ -241,6 +241,39 @@ void BlockMgr::update()
 	
 }
 
+bool BlockMgr::isGameOver()
+{
+	for (int i = 0; i < m_blockVec.size(); ++i) {
+		for (int j = 0; j < m_blockVec[0].size(); ++j) {
+
+			if (m_blockVec[i][j]->getNum() == 0) {
+				return false;
+			}
+
+			if (j == 3 && i < 3) {
+				if (m_blockVec[i][j]->getNum() == m_blockVec[i + 1][j]->getNum()) {
+					return false;
+				}
+			}
+
+			if (i == 3 && j < 3) {
+				if (m_blockVec[i][j]->getNum() == m_blockVec[i][j + 1]->getNum()) {
+					return false;
+				}
+			}
+
+			if (i < 3 && j < 3) {
+				if (m_blockVec[i][j]->getNum() == m_blockVec[i][j + 1]->getNum() ||
+					m_blockVec[i][j]->getNum() == m_blockVec[i + 1][j]->getNum()) {
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
 void BlockMgr::draw(sf::RenderWindow& window)
 {
 	for (int i = 0; i < m_blockVec.size(); ++i) {

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+#include "TxtAnimation.h"
 #include "BlockMgr.h"
 #include "Block.h"
 
@@ -9,6 +10,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 650), "2048");
 
 	BlockMgr mgr;
+	TxtAnimation txtAn;
 	mgr.init();
 
 	//***********4X4 Board***********
@@ -63,6 +65,11 @@ int main()
 		}
 
 		mgr.draw(window);
+
+		if (mgr.isGameOver()) {
+			txtAn.update();
+			txtAn.draw(window);
+		}
 		window.display();
 	}
 
