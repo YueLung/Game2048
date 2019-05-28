@@ -7,11 +7,26 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 650), "2048");
+	sf::RenderWindow window(sf::VideoMode(800, 700), "2048");
 
 	BlockMgr mgr;
-	TxtAnimation txtAn;
+	TxtAnimation gameOverAn; 
+
 	mgr.init();
+
+	//*************TXT*************
+	sf::Font font;
+	if (!font.loadFromFile("Arial.ttf"))
+	{
+		std::cout << "Can't find font Arial.ttf";
+	}
+	sf::Text text;
+	text.setFont(font);
+	text.setString("Press Space To Restart");
+	text.setCharacterSize(50);
+	text.setFillColor(sf::Color::White);
+	text.setPosition(135,0);
+	//*******************************
 
 	//***********4X4 Board***********
 	sf::RectangleShape horizontal_line[5];
@@ -36,39 +51,45 @@ int main()
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ) {
-				mgr.moveRight();
-				mgr.isPressAnyKey = true;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				mgr.moveLeft();
-				mgr.isPressAnyKey = true;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				mgr.moveUp();
-				mgr.isPressAnyKey = true;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				mgr.moveDown();
-				mgr.isPressAnyKey = true;
+			if (!mgr.isAnyEvent()) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+					mgr.moveRight();
+					mgr.isPressAnyKey = true;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+					mgr.moveLeft();
+					mgr.isPressAnyKey = true;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+					mgr.moveUp();
+					mgr.isPressAnyKey = true;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+					mgr.moveDown();
+					mgr.isPressAnyKey = true;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+					mgr.init();
+					mgr.isPressAnyKey = false;
+				}
 			}
 		}
 
 		mgr.update();
 
 		window.clear();
-		
+		window.draw(text);
+		mgr.draw(window);
+
 		for (int i = 0; i < 5; ++i)
 		{
 			window.draw(horizontal_line[i]);
 			window.draw(vertical_line[i]);
 		}
-
-		mgr.draw(window);
-
+		
 		if (mgr.isGameOver()) {
-			txtAn.update();
-			txtAn.draw(window);
+			gameOverAn.update();
+			gameOverAn.draw(window);
 		}
 		window.display();
 	}

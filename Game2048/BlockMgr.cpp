@@ -26,6 +26,11 @@ BlockMgr::~BlockMgr()
 
 void BlockMgr::init()
 {
+	for (int i = 0; i < m_blockVec.size(); ++i) {
+		for (int j = 0; j < m_blockVec[0].size(); ++j) {
+			m_blockVec[i][j]->setEvent(Event::NONE);
+		}
+	}
 	//first time appear block amount
 	int count = 1 + rand() % 2;
 
@@ -37,7 +42,7 @@ void BlockMgr::init()
 void BlockMgr::createNewBlock()
 {
 	srand(time(NULL));
-	std::cout << "create  ";
+
 	bool isPos2Create = false;
 	for (int i = 0; i < m_blockVec.size(); ++i) {
 		for (int j = 0; j < m_blockVec[0].size(); ++j) {
@@ -74,6 +79,7 @@ void BlockMgr::moveRight()
 					m_blockVec[i][k]->setEvent(Event::MOVE_RIGHT);
 					m_blockVec[i][k]->setMovePos(m_blockVec[i][j]->getInitPosX(), 0);
 					m_blockVec[i][j]->setEvent(Event::REPLACE);
+					m_blockVec[i][j]->setReplacePos(i, k);
 
 					if (m_blockVec[i][j]->getNum() == 0) {
 						m_blockVec[i][j]->setNum(m_blockVec[i][k]->getNum());
@@ -108,6 +114,7 @@ void BlockMgr::moveLeft()
 					m_blockVec[i][k]->setEvent(Event::MOVE_LEFT);
 					m_blockVec[i][k]->setMovePos(m_blockVec[i][j]->getInitPosX(), 0);
 					m_blockVec[i][j]->setEvent(Event::REPLACE);
+					m_blockVec[i][j]->setReplacePos(i, k);
 
 					if (m_blockVec[i][j]->getNum() == 0) {
 						m_blockVec[i][j]->setNum(m_blockVec[i][k]->getNum());
@@ -142,6 +149,7 @@ void BlockMgr::moveUp()
 					m_blockVec[k][i]->setEvent(Event::MOVE_UP);
 					m_blockVec[k][i]->setMovePos(0, m_blockVec[j][i]->getInitPosY());
 					m_blockVec[j][i]->setEvent(Event::REPLACE);
+					m_blockVec[j][i]->setReplacePos(k, i);
 
 					if (m_blockVec[j][i]->getNum() == 0) {
 						m_blockVec[j][i]->setNum(m_blockVec[k][i]->getNum());
@@ -176,6 +184,7 @@ void BlockMgr::moveDown()
 					m_blockVec[k][i]->setEvent(Event::MOVE_DOWN);
 					m_blockVec[k][i]->setMovePos(0, m_blockVec[j][i]->getInitPosY());
 					m_blockVec[j][i]->setEvent(Event::REPLACE);
+					m_blockVec[j][i]->setReplacePos(k, i);
 
 					if (m_blockVec[j][i]->getNum() == 0) {
 						m_blockVec[j][i]->setNum(m_blockVec[k][i]->getNum());
@@ -226,8 +235,11 @@ void BlockMgr::update()
 					isAnyEvent = true;
 				break;
 			case Event::REPLACE:
+				if (m_blockVec[m_blockVec[i][j]->m_replaceX][m_blockVec[i][j]->m_replaceY]->getEvent() == Event::NONE) {
 					m_blockVec[i][j]->changeNum();
 					isAnyEvent = true;
+				}
+					
 				break;
 			
 			}
@@ -239,6 +251,18 @@ void BlockMgr::update()
 		isCreateBlock = true;
 	}
 	
+}
+
+bool BlockMgr::isAnyEvent()
+{
+	for (int i = 0; i < m_blockVec.size(); ++i) {
+		for (int j = 0; j < m_blockVec[0].size(); ++j) {
+			if (m_blockVec[i][j]->getEvent() != Event::NONE) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 bool BlockMgr::isGameOver()

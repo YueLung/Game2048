@@ -21,7 +21,7 @@ void Block::initSquare()
 {
 	m_square.setSize({ 0, 0 });
 	m_square.setPosition(m_x + (SQUARE::LENGTH + LINE::LENGTH) / 2, m_y + (SQUARE::LENGTH + LINE::LENGTH) / 2);
-	m_square.setFillColor(sf::Color(250, 100, 1000));
+	m_square.setFillColor(sf::Color(0, 0, 0));
 }
 
 void Block::initTxt()
@@ -90,6 +90,7 @@ void Block::moveRightAnimation()
 void Block::changeNum()
 {
 	setEvent(Event::NONE);
+	m_square.setFillColor(getNumColor(m_num));
 
 	if (m_num == 0) {
 		initSquare();
@@ -118,7 +119,6 @@ void Block::changeNum()
 void Block::setNum(int num)
 {
 	m_num = num;
-	m_square.setFillColor(getNumColor(m_num));
 }
 
 void Block::appearAnimation()
@@ -129,6 +129,7 @@ void Block::appearAnimation()
 		m_text.move(-1, -1);
 
 		m_square.setSize(sf::Vector2f(getLength() + EXPEND_SPEED, getLength() + EXPEND_SPEED));
+		m_square.setFillColor(getNumColor(m_num));
 		m_square.move(-1, -1);
 	}
 	else {
@@ -212,6 +213,12 @@ void Block::setMovePos(int x, int y)
 {
 	m_moveX = x;
 	m_moveY = y;
+}
+
+void Block::setReplacePos(int x, int y)
+{
+	m_replaceX = x;
+	m_replaceY = y;
 }
 
 int Block::getNum()

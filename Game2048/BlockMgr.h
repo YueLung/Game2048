@@ -5,7 +5,7 @@
 class Block;
 
 const int INIT_X = 90;
-const int INIT_Y = 20;
+const int INIT_Y = 60;
 
 class BlockMgr
 {
@@ -21,6 +21,7 @@ public:
 	void moveUp();
 	void moveDown();
 
+	bool isAnyEvent();
 	bool isGameOver();
 	void update();
 

@@ -12,7 +12,7 @@ enum  class Event {
 };
 
 const int EXPEND_SPEED = 2;
-const int MOVE_SPEED = 10;
+const int MOVE_SPEED = 5;
 
 class Block
 {
@@ -28,7 +28,6 @@ public:
 	int getInitPosX();
 	int getInitPosY();
 
-
 	void setEvent(Event event);
 	void setNum(int num);
 
@@ -36,6 +35,7 @@ public:
 	int getNum();
 
 	void setMovePos(int x, int y);
+	void setReplacePos(int x, int y);
 
 	//Animation
 	void appearAnimation();
@@ -49,6 +49,8 @@ public:
 	bool canMerge;
 	void changeNum();
 
+	int m_replaceX;
+	int m_replaceY;
 private:
 	sf::Color getNumColor(int num);
 	int getLength();
@@ -63,6 +65,6 @@ private:
 	const int m_y;
 	int m_moveX;
 	int m_moveY;
-	
+
 };
 
