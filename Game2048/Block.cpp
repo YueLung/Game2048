@@ -43,6 +43,9 @@ void Block::moveUpAnimation()
 	else {
 		initSquare();
 		initTxt();
+		if (getEvent() != Event::REPLACE) {
+			m_event.pop();
+		}
 		setEvent(Event::NONE);
 	}
 
@@ -57,6 +60,9 @@ void Block::moveDownAnimation()
 	else {
 		initSquare();
 		initTxt();
+		if (getEvent() != Event::REPLACE) {
+			m_event.pop();
+		}
 		setEvent(Event::NONE);
 	}
 }
@@ -70,6 +76,9 @@ void Block::moveLeftAnimation()
 	else {
 		initSquare();
 		initTxt();
+		if (getEvent() != Event::REPLACE) {
+			m_event.pop();
+		}
 		setEvent(Event::NONE);
 	}
 }
@@ -83,12 +92,16 @@ void Block::moveRightAnimation()
 	else {
 		initSquare();
 		initTxt();
+		if (getEvent() != Event::REPLACE) {
+			m_event.pop();
+		}
 		setEvent(Event::NONE);
 	}
 }
 
 void Block::changeNum()
 {
+	popEvent();
 	setEvent(Event::NONE);
 	m_square.setFillColor(getNumColor(m_num));
 
@@ -133,8 +146,18 @@ void Block::appearAnimation()
 		m_square.move(-1, -1);
 	}
 	else {
-		m_event = Event::NONE;
+		m_event.pop();
+		m_event.push(Event::NONE);
 	}
+}
+
+void Block::popEvent()
+{
+	int size = m_event.size();
+	for (int i = 0; i < size; ++i){
+		m_event.pop();
+	}
+		
 }
 
 int Block::getLength()
@@ -206,7 +229,7 @@ sf::Color Block::getNumColor(int num)
 
 void Block::setEvent(Event event)
 {
-	m_event = event;
+	m_event.push(event);
 }
 
 void Block::setMovePos(int x, int y)
@@ -228,7 +251,7 @@ int Block::getNum()
 
 Event Block::getEvent()
 {
-	return m_event;
+	return m_event.front();
 }
 
 void Block::draw(sf::RenderWindow& window)

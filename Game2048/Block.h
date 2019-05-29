@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <queue>
 
 namespace SQUARE { 
 	const int LENGTH = 140; 
@@ -12,7 +13,7 @@ enum  class Event {
 };
 
 const int EXPEND_SPEED = 2;
-const int MOVE_SPEED = 5;
+const int MOVE_SPEED = 2;
 
 class Block
 {
@@ -30,6 +31,8 @@ public:
 
 	void setEvent(Event event);
 	void setNum(int num);
+
+	void popEvent();
 
 	Event getEvent();
 	int getNum();
@@ -56,7 +59,7 @@ private:
 	int getLength();
 
 private:
-	Event m_event;
+	std::queue<Event> m_event;
 	int m_num;
 	sf::RectangleShape m_square;
 	sf::Font m_font;
