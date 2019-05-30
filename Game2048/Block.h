@@ -2,18 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <queue>
 
-namespace SQUARE { 
-	const int LENGTH = 140; 
-};
-namespace LINE {
-	const int LENGTH = 10;
-}
-enum  class Event {
-	NONE, APPEAR, REPLACE, MOVE_RIGHT, MOVE_LEFT, MOVE_UP, MOVE_DOWN
-};
-
-const int EXPEND_SPEED = 2;
-const int MOVE_SPEED = 2;
+#include "GameDef.h""
 
 class Block
 {

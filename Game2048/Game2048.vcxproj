@@ -136,12 +136,15 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockMgr.cpp" />
+    <ClCompile Include="GameStage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TxtAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockMgr.h" />
+    <ClInclude Include="GameDef.h" />
+    <ClInclude Include="GameStage.h" />
     <ClInclude Include="TxtAnimation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

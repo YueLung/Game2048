@@ -2,10 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class Block;
 
-const int INIT_X = 90;
-const int INIT_Y = 60;
+
+class Block;
 
 class BlockMgr
 {

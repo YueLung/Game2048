@@ -5,10 +5,13 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockMgr.cpp" />
     <ClCompile Include="TxtAnimation.cpp" />
+    <ClCompile Include="GameStage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockMgr.h" />
     <ClInclude Include="TxtAnimation.h" />
+    <ClInclude Include="GameStage.h" />
+    <ClInclude Include="GameDef.h" />
   </ItemGroup>
 </Project>
